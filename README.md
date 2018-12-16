@@ -1,0 +1,1 @@
+# wechat_weather_autobot
