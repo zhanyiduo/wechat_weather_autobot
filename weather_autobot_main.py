@@ -10,11 +10,8 @@ def weather_main(userName, theCity=None,zip=63017):
         weather_text_list = get_weather_by_city(theCity)
 
     for weather_text in weather_text_list:
-        #print(weather_text)
         itchat.send(weather_text, toUserName=userName)
     print('succeed')
-
-
 
 # 如果对方发的是文字，则我们给对方回复以下的东西
 @itchat.msg_register([TEXT])
@@ -27,7 +24,15 @@ def text_reply(msg):
         city = msg['Text'][msg['Text'].find("+")+1:]
         weather_main(msg['FromUserName'], city)
 
-
+@itchat.msg_register([TEXT], isGroupChat=True)
+def text_reply(msg):
+    match1 = '天气' in msg['Text']
+    match2 = "+" in msg['Text']
+    if (match1) & (not match2):
+        weather_main(msg['FromUserName'])
+    elif match1 & match2:
+        city = msg['Text'][msg['Text'].find("+")+1:]
+        weather_main(msg['FromUserName'], city)
 
 itchat.auto_login()
 itchat.run()
