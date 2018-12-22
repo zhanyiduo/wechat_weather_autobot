@@ -26,15 +26,18 @@ def text_reply(msg):
 
 @itchat.msg_register([TEXT], isGroupChat=True)
 def text_reply(msg):
-    match1 = '天气' in msg['Text']
-    match2 = "+" in msg['Text']
-    if (match1) & (not match2):
-        weather_main(msg['FromUserName'])
-    elif match1 & match2:
-        city = msg['Text'][msg['Text'].find("+")+1:]
-        weather_main(msg['FromUserName'], city)
+    if not msg['User']['EncryChatRoomId'] == '@46d580012e93967b73b95b376425d739':
+        return None
+    else:
+        match1 = '天气' in msg['Text']
+        match2 = "+" in msg['Text']
+        if (match1) & (not match2):
+            weather_main(msg['FromUserName'])
+        elif match1 & match2:
+            city = msg['Text'][msg['Text'].find("+")+1:]
+            weather_main(msg['FromUserName'], city)
 
-itchat.auto_login()
+itchat.auto_login(hotReload=True)
 itchat.run()
 
 def timer(n):
