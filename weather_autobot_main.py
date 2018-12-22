@@ -26,7 +26,7 @@ def text_reply(msg):
 
 @itchat.msg_register([TEXT], isGroupChat=True)
 def text_reply(msg):
-    if not msg['User']['EncryChatRoomId'] == '@46d580012e93967b73b95b376425d739':
+    if not msg['User']['NickName'] == '咱们这一家子':
         return None
     else:
         match1 = '天气' in msg['Text']
