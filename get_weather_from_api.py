@@ -76,6 +76,8 @@ def extract_weather_data(rs_dict):
                     weather_chn = weather_chn + '雨'
             if txt != text_set[-1]:
                 weather_chn = weather_chn + '转'
+        if weather_chn.endswith('转'):
+            weather_chn = weather_chn[:-1]
         return weather_chn
 
     weather_daily_df['weather_chn'] = weather_daily_df['weather'].apply(lambda x: convert_weather_to_chinese(x))
