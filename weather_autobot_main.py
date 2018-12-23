@@ -4,7 +4,7 @@ from itchat.content import *
 from get_weather_from_api import *
 
 def weather_main(userName, theCity=None,zip=63017):
-    if theCity==None:
+    if theCity=='zip mode':
         weather_text_list = get_weather_by_zip(zip)
     else:
         weather_text_list = get_weather_by_city(theCity)
@@ -14,14 +14,14 @@ def weather_main(userName, theCity=None,zip=63017):
     print('succeed')
 
 def extract_cityname(txt):
-    city = None
     if txt == '天气':
+        city = 'zip mode'
         return city
     elif '天气' in txt:
         txt = txt.replace('天气', '')
         city = txt.replace("+",'')
         #city = ''.join(e for e in txt if e.isalnum()) #remove all the special character
-        return city
+        return city.strip()
 
 # 如果对方发的是文字，则我们给对方回复以下的东西
 @itchat.msg_register([TEXT])
