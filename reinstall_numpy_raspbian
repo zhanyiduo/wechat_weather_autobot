@@ -1,0 +1,4 @@
+sudo apt update
+sudo apt remove python3-numpy
+sudo apt install libatlas3-base
+sudo pip3 install numpy
