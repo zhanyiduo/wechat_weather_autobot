@@ -3,12 +3,13 @@ import re
 from itchat.content import *
 from get_weather_from_api import *
 
-def weather_main(userName, theCity=None,zip=63017):
+def weather_main(userName,theCity='St. Louis',zip=63017):
     if theCity=='zip mode':
         weather_text_list = get_weather_by_zip(zip)
-    else:
+    elif theCity:
         weather_text_list = get_weather_by_city(theCity)
-
+    else:
+        return print('No City found')
     for weather_text in weather_text_list:
         itchat.send(weather_text, toUserName=userName)
     print('succeed')
@@ -22,12 +23,15 @@ def extract_cityname(txt):
         city = txt.replace("+",'')
         #city = ''.join(e for e in txt if e.isalnum()) #remove all the special character
         return city.strip()
+    else:
+        return None
 
 # 如果对方发的是文字，则我们给对方回复以下的东西
 @itchat.msg_register([TEXT])
 def text_reply(msg):
     city = extract_cityname(msg['Text'])
-    weather_main(msg['FromUserName'], city)
+    if city:
+        weather_main(msg['FromUserName'], city)
 
 @itchat.msg_register([TEXT], isGroupChat=True)
 def text_reply(msg):
@@ -35,7 +39,8 @@ def text_reply(msg):
         return None
     else:
         city = extract_cityname(msg['Text'])
-        weather_main(msg['FromUserName'], city)
+        if city:
+            weather_main(msg['FromUserName'], city)
 
 itchat.auto_login(hotReload=True)
 itchat.run()
