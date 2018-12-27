@@ -92,20 +92,18 @@ def extract_weather_data(rs_dict):
                                                                 row['wind_chn']),
                            axis=1)
     return weather_text_list
-def get_weather_by_city(cityname='None'):
+def get_weather_by_city(cityname='None',ak_baidu=None,ak_weather=None):
     '''If there is chinese character in the cityname, then use baidu weather api'''
     weather_text_list = []
     if re.search(u'[\u4e00-\u9fff]', cityname):
-        url = 'http://api.map.baidu.com/telematics/v3/weather?location={city}&output=json&ak=TueGDhCvwI6fOrQnLM0qmXxY9N0OkOiQ&callback=?'\
-            .format(city=cityname)
+        #url = 'http://api.map.baidu.com/telematics/v3/weather?location={city}&output=json&ak=TueGDhCvwI6fOrQnLM0qmXxY9N0OkOiQ&callback=?' \
+        url = 'http://api.map.baidu.com/telematics/v3/weather?location={city}&output=json&ak={ak}&callback=?' \
+                    .format(city=cityname,ak=ak_baidu)
         # 使用requests发起请求，接受返回的结果
         rs = requests.get(url)
         # 使用loads函数，将json字符串转换为python的字典或列表
         rs_dict = json.loads(rs.text)
-        # 取出error
-        error_code = rs_dict['error']
-        # 如果取出的error为0，表示数据正常，否则没有查询到结果
-        if error_code == 0:
+        if rs_dict['status'] == 'success':
             # 从字典中取出数据
             results = rs_dict['results']
             # 根据索引取出天气信息字典
@@ -127,19 +125,18 @@ def get_weather_by_city(cityname='None'):
     else:
         url = 'http://api.openweathermap.org/data/2.5/forecast?' \
               'q={city},{country}&mode=json&units=metric&APPID={APIKEY}'\
-            .format(city=cityname,country='US',APIKEY='340da4ca81cfd1cba05fc94a60cd6293')
+            .format(city=cityname,country='US',APIKEY=ak_weather)
         rs = requests.get(url)
         rs_dict = json.loads(rs.text)
         error_code = rs_dict['cod']
         if int(error_code) == 200:
             weather_text_list = extract_weather_data(rs_dict)
     return weather_text_list
-def get_weather_by_zip(zipcode = 63017):
-    zipcode = 63017
+def get_weather_by_zip(zipcode = 63017,ak_weather=None):
     weather_text_list=[]
     url = 'http://api.openweathermap.org/data/2.5/forecast?' \
           'zip={zip_code},{country}&mode=json&units=metric&APPID={APIKEY}' \
-        .format(zip_code=zipcode, country='US', APIKEY='340da4ca81cfd1cba05fc94a60cd6293')
+        .format(zip_code=zipcode, country='US', APIKEY=ak_weather)
     rs = requests.get(url)
     rs_dict = json.loads(rs.text)
     error_code = rs_dict['cod']

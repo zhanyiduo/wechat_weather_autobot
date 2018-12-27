@@ -1,13 +1,17 @@
 import itchat
-import re
 from itchat.content import *
 from get_weather_from_api import *
+import pandas as pd
 
-def weather_main(userName,theCity='St. Louis',zip=63017):
+with open('api_key.txt', 'r') as f:
+    ak = f.readlines()
+ak = [x.strip() for x in ak]
+
+def weather_main(userName,theCity='St. Louis',zip=63017,ak0=None,ak1=None):
     if theCity=='zip mode':
-        weather_text_list = get_weather_by_zip(zip)
+        weather_text_list = get_weather_by_zip(zip,ak1)
     elif theCity:
-        weather_text_list = get_weather_by_city(theCity)
+        weather_text_list = get_weather_by_city(theCity,ak0,ak1)
     else:
         return print('No City found')
     for weather_text in weather_text_list:
@@ -31,7 +35,7 @@ def extract_cityname(txt):
 def text_reply(msg):
     city = extract_cityname(msg['Text'])
     if city:
-        weather_main(msg['FromUserName'], city)
+        weather_main(msg['FromUserName'], city, ak0=ak[0], ak1=ak[1])
 
 @itchat.msg_register([TEXT], isGroupChat=True)
 def text_reply(msg):
@@ -40,7 +44,7 @@ def text_reply(msg):
     else:
         city = extract_cityname(msg['Text'])
         if city:
-            weather_main(msg['FromUserName'], city)
+            weather_main(msg['FromUserName'], city, ak0=ak[0], ak1=ak[1])
 
 itchat.auto_login(hotReload=True)
 itchat.run()
