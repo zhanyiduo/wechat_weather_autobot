@@ -74,6 +74,11 @@ def extract_weather_data(rs_dict):
                     continue
                 else:
                     weather_chn = weather_chn + '雨'
+            elif 'snow' in txt:
+                if '雪' in weather_chn:
+                    continue
+                else:
+                    weather_chn = weather_chn + '雪'
             if txt != text_set[-1]:
                 weather_chn = weather_chn + '转'
         if weather_chn.endswith('转'):
@@ -84,7 +89,7 @@ def extract_weather_data(rs_dict):
     weather_daily_df['temp_chn'] \
         = weather_daily_df.apply(lambda row: '，气温' + str(int(row['temp_min'])) + '~'
                                              + str(int(row['temp_max'])) + '℃', axis=1)
-    weather_daily_df['wind_chn'] = weather_daily_df['wind'].apply(lambda x: '，风速' + str(round(x, 1)) + 'm/s')
+    weather_daily_df['wind_chn'] = weather_daily_df['wind'].apply(lambda x: '，风速' + str(round(3.6*x, 1)) + 'km/h')
 
     weather_daily_df.apply(lambda row: weather_text_list.append(row['weekday_chn'] +
                                                                 row['weather_chn'] +
