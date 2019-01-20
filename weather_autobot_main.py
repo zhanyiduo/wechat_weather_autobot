@@ -1,7 +1,7 @@
 import itchat
 from itchat.content import *
 from get_weather_from_api import get_weather_from_api
-import datetime
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 with open('api_key.txt', 'r') as f:
     ak = f.readlines()
@@ -59,7 +59,7 @@ def my_cron_job():
                  ak=ak, scheduled_job=True)
     print('my cron job')
 
-from apscheduler.schedulers.blocking import BlockingScheduler
+'''Start Scheduling Job'''
 sched = BlockingScheduler()
 sched.add_job(my_cron_job, 'cron', id='my_cron_job1', hour=1)
 #sched.add_job(itchat.run(), 'interval', id='my_job_id', seconds=5)
