@@ -1,19 +1,24 @@
 import itchat
 from itchat.content import *
-from get_weather_from_api import *
-import pandas as pd
+from get_weather_from_api import get_weather_from_api
+import datetime
 
 with open('api_key.txt', 'r') as f:
     ak = f.readlines()
 ak = [x.strip() for x in ak]
 
-def weather_main(userName,theCity='St. Louis',zip=63017,ak0=None,ak1=None):
-    if theCity=='zip mode':
-        weather_text_list = get_weather_by_zip(zip,ak1)
-    elif theCity:
-        weather_text_list = get_weather_by_city(theCity,ak0,ak1)
+def weather_main(userName,theCity='St. Louis',zip=63017,ak=None, scheduled_job = False):
+    weather = get_weather_from_api(ak)
+    if not scheduled_job:
+        if theCity=='zip mode':
+            weather_text_list = weather.get_weather_by_zip(zip)
+        elif theCity:
+            weather_text_list = weather.get_weather_by_city(theCity)
+        else:
+            return print('No City found')
     else:
-        return print('No City found')
+        weather_text_list = weather.get_hourly_weather_data_by_zip()
+
     for weather_text in weather_text_list:
         itchat.send(weather_text, toUserName=userName)
     print('succeed')
@@ -35,7 +40,7 @@ def extract_cityname(txt):
 def text_reply(msg):
     city = extract_cityname(msg['Text'])
     if city:
-        weather_main(msg['FromUserName'], city, ak0=ak[0], ak1=ak[1])
+        weather_main(msg['FromUserName'], city, ak=ak)
 
 @itchat.msg_register([TEXT], isGroupChat=True)
 def text_reply(msg):
@@ -44,7 +49,18 @@ def text_reply(msg):
     else:
         city = extract_cityname(msg['Text'])
         if city:
-            weather_main(msg['FromUserName'], city, ak0=ak[0], ak1=ak[1])
+            weather_main(msg['FromUserName'], city, ak=ak)
 
 itchat.auto_login(hotReload=True)
-itchat.run()
+#itchat.run()
+
+def my_cron_job():
+    weather_main(userName='@@0d3acf419abbf2a57299ade1e36d9d349e344494f00f46469c8ce6a635eb7e9c',
+                 ak=ak, scheduled_job=True)
+    print('my cron job')
+
+from apscheduler.schedulers.blocking import BlockingScheduler
+sched = BlockingScheduler()
+sched.add_job(my_cron_job, 'cron', id='my_cron_job1', hour=1)
+#sched.add_job(itchat.run(), 'interval', id='my_job_id', seconds=5)
+sched.start()
