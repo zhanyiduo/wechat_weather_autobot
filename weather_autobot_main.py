@@ -53,9 +53,9 @@ def text_reply(msg):
 
 itchat.auto_login(hotReload=True)
 #itchat.run()
-
+#'@b585175d4de9aa775dea56070453ba0c'
 def my_cron_job():
-    weather_main(userName='@@0d3acf419abbf2a57299ade1e36d9d349e344494f00f46469c8ce6a635eb7e9c',
+    weather_main(userName='@@3cec15dc7b3bca51340c04f1badfa75edea58a420744128538751ce79d17461a',
                  ak=ak, scheduled_job=True)
     print('my cron job')
 
