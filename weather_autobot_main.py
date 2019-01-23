@@ -17,7 +17,7 @@ def weather_main(userName,theCity='St. Louis',zip=63017,ak=None, scheduled_job =
         else:
             return print('No City found')
     else:
-        weather_text_list = weather.get_hourly_weather_data_by_zip()
+        weather_text_list = weather.get_hourly_weather_data_by_zip(weather_data_pnt=5)
 
     for weather_text in weather_text_list:
         itchat.send(weather_text, toUserName=userName)
@@ -55,12 +55,15 @@ itchat.auto_login(hotReload=True)
 #itchat.run()
 #'@b585175d4de9aa775dea56070453ba0c'
 def my_cron_job():
-    weather_main(userName='@@3cec15dc7b3bca51340c04f1badfa75edea58a420744128538751ce79d17461a',
-                 ak=ak, scheduled_job=True)
+    weather_main(userName='@b585175d4de9aa775dea56070453ba0c',ak=ak, scheduled_job=True)
+    weather_main(userName='@d9eed6209c06a76b414b503d461c0991234ebe5d3cf13ed1172867b052dec2d8', ak=ak, scheduled_job=True)
+    weather_main(userName='@6af565b660f33b488ea576d7800f1b675dc76439e7f49d2a5bd0ee8db0f80917', ak=ak, scheduled_job=True)
+    weather_main(userName='@0bab99fc303c55c257712f8b6ba7f0d7dda1e1ef948ea17f2c4d036a8d42157f', ak=ak, scheduled_job=True)
+    weather_main(userName='@537c14efa69da4dfc91cd38ff1ffb4c5c40b55c9d898347c6ae72e0f5591e877', ak=ak, scheduled_job=True)
     print('my cron job')
 
 '''Start Scheduling Job'''
 sched = BlockingScheduler()
-sched.add_job(my_cron_job, 'cron', id='my_cron_job1', hour=1)
+sched.add_job(my_cron_job, 'cron', id='my_cron_job1', hour=7)
 #sched.add_job(itchat.run(), 'interval', id='my_job_id', seconds=5)
 sched.start()
