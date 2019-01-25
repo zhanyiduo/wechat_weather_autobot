@@ -52,7 +52,7 @@ def text_reply(msg):
             weather_main(msg['FromUserName'], city, ak=ak)
 
 itchat.auto_login(hotReload=True)
-#itchat.run()
+itchat.run()
 #'@b585175d4de9aa775dea56070453ba0c'
 def my_cron_job():
     weather_main(userName='@b585175d4de9aa775dea56070453ba0c',ak=ak, scheduled_job=True)
@@ -64,6 +64,6 @@ def my_cron_job():
 
 '''Start Scheduling Job'''
 sched = BlockingScheduler()
-sched.add_job(my_cron_job, 'cron', id='my_cron_job1', hour=7)
+sched.add_job(my_cron_job, 'cron', id='my_cron_job1', second=1)
 #sched.add_job(itchat.run(), 'interval', id='my_job_id', seconds=5)
 sched.start()
