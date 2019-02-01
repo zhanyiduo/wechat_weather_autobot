@@ -35,6 +35,11 @@ def extract_cityname(txt):
     else:
         return None
 
+def get_username(name=None):
+    return itchat.search_friends(name=name)[0]['UserName']
+
+def get_chatroom(name=None):
+    return itchat.search_chatrooms(name=name)[0]['UserName']
 # 如果对方发的是文字，则我们给对方回复以下的东西
 @itchat.msg_register([TEXT])
 def text_reply(msg):
@@ -53,17 +58,10 @@ def text_reply(msg):
 
 itchat.auto_login(hotReload=True)
 itchat.run()
-#'@b585175d4de9aa775dea56070453ba0c'
 def my_cron_job():
-    weather_main(userName='@b585175d4de9aa775dea56070453ba0c',ak=ak, scheduled_job=True)
-    weather_main(userName='@d9eed6209c06a76b414b503d461c0991234ebe5d3cf13ed1172867b052dec2d8', ak=ak, scheduled_job=True)
-    weather_main(userName='@6af565b660f33b488ea576d7800f1b675dc76439e7f49d2a5bd0ee8db0f80917', ak=ak, scheduled_job=True)
-    weather_main(userName='@0bab99fc303c55c257712f8b6ba7f0d7dda1e1ef948ea17f2c4d036a8d42157f', ak=ak, scheduled_job=True)
-    weather_main(userName='@537c14efa69da4dfc91cd38ff1ffb4c5c40b55c9d898347c6ae72e0f5591e877', ak=ak, scheduled_job=True)
+    weather_main(userName=get_chatroom('咱们这一家子'),ak=ak, scheduled_job=True)
     print('my cron job')
-
-'''Start Scheduling Job'''
 sched = BlockingScheduler()
-sched.add_job(my_cron_job, 'cron', id='my_cron_job1', second=1)
+sched.add_job(my_cron_job, 'cron', id='my_cron_job1', hour=1)
 #sched.add_job(itchat.run(), 'interval', id='my_job_id', seconds=5)
 sched.start()
