@@ -36,10 +36,16 @@ def extract_cityname(txt):
         return None
 
 def get_username(name=None):
-    return itchat.search_friends(name=name)[0]['UserName']
+    if itchat.search_friends(name=name)[0]['UserName']:
+        return itchat.search_friends(name=name)[0]['UserName']
+    else:
+        return None
 
 def get_chatroom(name=None):
-    return itchat.search_chatrooms(name=name)[0]['UserName']
+    if itchat.search_chatrooms(name=name)[0]['UserName']:
+        return itchat.search_chatrooms(name=name)[0]['UserName']
+    else:
+        return None
 # 如果对方发的是文字，则我们给对方回复以下的东西
 @itchat.msg_register([TEXT])
 def text_reply(msg):
