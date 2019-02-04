@@ -8,6 +8,7 @@ with open('api_key.txt', 'r') as f:
 ak = [x.strip() for x in ak]
 
 def weather_main(userName,theCity='St. Louis',zip=63017,ak=None, scheduled_job = False):
+    print(userName)
     weather = get_weather_from_api(ak)
     if not scheduled_job:
         if theCity=='zip mode':
@@ -63,7 +64,7 @@ def text_reply(msg):
             weather_main(msg['FromUserName'], city, ak=ak)
 
 itchat.auto_login(hotReload=True)
-itchat.run()
+#itchat.run()
 def my_cron_job():
     weather_main(userName=get_chatroom('咱们这一家子'),ak=ak, scheduled_job=True)
     print('my cron job')
