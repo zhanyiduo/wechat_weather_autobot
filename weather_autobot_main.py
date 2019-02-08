@@ -18,7 +18,7 @@ def weather_main(userName,theCity='St. Louis',zip=63017,ak=None, scheduled_job =
         else:
             return print('No City found')
     else:
-        weather_text_list = weather.get_hourly_weather_data_by_zip(weather_data_pnt=5)
+        weather_text_list = weather.get_hourly_weather_data_by_zip(weather_data_pnt=9)
 
     for weather_text in weather_text_list:
         itchat.send(weather_text, toUserName=userName)
