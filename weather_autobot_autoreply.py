@@ -63,7 +63,7 @@ def text_reply(msg):
         if city:
             weather_main(msg['FromUserName'], city, ak=ak)
 itchat.auto_login(hotReload=True)
-#itchat.run()
+itchat.run()
 def my_cron_job():
     weather_main(userName=get_chatroom('咱们这一家子'),ak=ak, scheduled_job=True)
     print('my cron job')
