@@ -18,7 +18,9 @@ def weather_main(userName,theCity='St. Louis',zip=63017,ak=None, scheduled_job =
         else:
             return print('No City found')
     else:
-        weather_text_list = weather.get_hourly_weather_data_by_zip(weather_data_pnt=7)
+        #weather_text_list = weather.get_hourly_weather_data_by_zip(weather_data_pnt=7)
+        weather_text_list = weather.get_weather_by_zip(zip)
+        weather_text_list = weather_text_list[0:2]
 
     for weather_text in weather_text_list:
         itchat.send(weather_text, toUserName=userName)
@@ -63,7 +65,7 @@ def text_reply(msg):
         if city:
             weather_main(msg['FromUserName'], city, ak=ak)
 itchat.auto_login(hotReload=True)
-itchat.run()
+#itchat.run()
 def my_cron_job():
     weather_main(userName=get_chatroom('咱们这一家子'),ak=ak, scheduled_job=True)
     print('my cron job')
