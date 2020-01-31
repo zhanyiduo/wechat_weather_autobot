@@ -34,7 +34,7 @@ def virus_stat_text(region=['武汉','辽宁']):
     confirm = today_stat['confirm']
     suspect = today_stat['suspect']
     dead = today_stat['dead']
-    virus_stat_text_list = [f'{dt}日最新2019-nCoV疫情统计:']
+    virus_stat_text_list = [f'{dt}日最新2019-nCOV疫情统计：']
     virus_stat_text_list.append(f'全国确诊{confirm}例，疑似{suspect}例，死亡{dead}例')
 
     #get city data
