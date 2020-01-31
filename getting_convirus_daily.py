@@ -35,7 +35,7 @@ def virus_stat_text(region=['武汉','辽宁']):
     suspect = today_stat['suspect']
     dead = today_stat['dead']
     virus_stat_text_list = ['{}日最新2019-nCoV疫情统计：'.format(dt)]
-    virus_stat_text_list.append('全国确诊{0}例，疑似{1}例，死亡{2}例'.format(confirm,suspect,dead)
+    virus_stat_text_list.append('全国确诊{0}例，疑似{1}例，死亡{2}例'.format(confirm,suspect,dead))
 
     #get city data
     for item in city_data:
@@ -43,11 +43,11 @@ def virus_stat_text(region=['武汉','辽宁']):
             city = str(item['city'])
             confirm = str(item['confirm'])
             dead = str(item['dead'])
-            virus_stat_text_list.append('{0}确诊{1}例，死亡{2}例'.format(city,confirm,dead)
+            virus_stat_text_list.append('{0}确诊{1}例，死亡{2}例'.format(city,confirm,dead))
     for i in region:
         if i in province_data.keys():
             confirm = str(province_data[i])
-            virus_stat_text_list.append('{0}确诊{1}例'.format(i,confirm)
+            virus_stat_text_list.append('{0}确诊{1}例'.format(i,confirm))
     return virus_stat_text_list
 
 if __name__ == '__main__':
