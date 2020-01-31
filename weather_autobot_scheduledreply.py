@@ -1,11 +1,18 @@
 import itchat
 from itchat.content import *
 from get_weather_from_api import get_weather_from_api
+from getting_convirus_daily import virus_stat_text
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 with open('api_key.txt', 'r') as f:
     ak = f.readlines()
 ak = [x.strip() for x in ak]
+
+def send_nCov(userName, region=['武汉','辽宁']):
+    virus_stat_text_list = virus_stat_text(region=region)
+    for virus_text in virus_stat_text_list:
+        itchat.send(virus_text, toUserName=userName)
+    return None
 
 def weather_main(userName,theCity='St. Louis',zip=63017,ak=None, scheduled_job = False):
     print(userName)
@@ -68,8 +75,9 @@ itchat.auto_login(hotReload=True)
 #itchat.run()
 def my_cron_job():
     weather_main(userName=get_chatroom('咱们这一家子'),ak=ak, scheduled_job=True)
+    send_nCov(userName=get_chatroom('咱们这一家子'))
     print('my cron job')
 sched = BlockingScheduler()
 sched.add_job(my_cron_job, 'cron', id='my_cron_job1', hour=1)
-#sched.add_job(itchat.run(), 'interval', id='my_job_id', seconds=5)
+#sched.add_job(my_cron_job, 'interval', id='my_job_id', seconds=5)
 sched.start()
