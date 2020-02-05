@@ -52,8 +52,11 @@ def get_username(name=None):
         return None
 
 def get_chatroom(name=None):
-    if itchat.search_chatrooms(name=name)[0]['UserName']:
-        return itchat.search_chatrooms(name=name)[0]['UserName']
+    msgs = itchat.search_chatrooms(name=name)
+    if msgs:
+        for msg in msgs:
+            if msg.get('NickName') == name:
+                return msg.get('UserName')
     else:
         return None
 # 如果对方发的是文字，则我们给对方回复以下的东西
