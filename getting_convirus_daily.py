@@ -126,6 +126,7 @@ def virus_stat_text(region=['武汉','辽宁']):
 
     peaknum,peakdate = get_predition(daily_df)
     virus_stat_text_list.append('预测最终感染人数：{0}\n预测{1}感染人数达到峰值'.format(peaknum,peakdate))
+    print(virus_stat_text_list)
     return virus_stat_text_list
 
 if __name__ == '__main__':
