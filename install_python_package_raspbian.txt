@@ -1,0 +1,82 @@
+sudo apt update
+sudo apt remove python3-numpy
+sudo apt install libatlas3-base
+sudo pip3 install numpy
+
+# Install Python packages on raspberrypi
+Just follow these simple steps to install Python packages - Numpy, Scipy, Scikit-learn, Matplotlib and Pywavelets on Raspberrypi
+
+OS updates
+==========
+sudo apt-get dist-upgrade
+sudo apt-get update
+sudo apt-get upgrade
+
+Python esential updates
+=======================
+sudo apt-get install libblas-dev
+sudo apt-get install liblapack-dev
+sudo apt-get install python-dev
+sudo apt-get install libatlas-base-dev
+sudo apt-get install gfortran
+sudo apt-get install python-setuptools
+sudo apt-get install python3-setuptools
+
+Numpy
+======
+sudo apt-get install numpy
+
+Scipy
+======
+sudo apt-get install python-scipy            #for python 2
+sudo apt-get install python-scipy --fix-missing
+sudo pip3 install scipy                      #for python 3
+
+Scikit-learn
+============
+sudo pip3 install scikit-learn           # for python 3
+
+Matplotlib
+==========
+sudo apt-get install python-matplotlib
+
+Pywavelets
+=================
+sudo apt-get install build essential
+sudo apt-get install python-wheel
+sudo apt-get install python3-dev
+sudo pip3 install Pywavelets
+sudo apt-get install python-dev
+pip install PyWavelets
+
+nothing else work clone the git and install
+===========================================
+sudo apt-get install git
+sudo git clone git://github.com/scipy/scipy.git scipy
+sudo git clone  git://github.com/scikit-learn/scikit-learn.git
+sudo git clone https://github.com/PyWavelets/pywt.git PyWavelets
+
+change dir to cloned directory and execute
+sudo python setup.py install
+
+Optional python packages
+===================================
+In case of errors please install these optional Python packages, it will fix.
+
+sudo apt-get install python-dev libxml2-dev libxslt1-dev zlib1g-dev python3-dev
+sudo apt-get install python-setuptools
+
+In most cases it seems only build-essential and python-dev  are only required.
+sudo apt-get install build-essential
+sudo apt-get install python-dev
+
+Remove unnecessary packages and free space
+============================================
+sudo apt-get purge libreoffice wolfram-engine sonic-pi scratch
+sudo apt-get autoremove
+
+Libre Offfice doesn't go? Give this a try :)
+
+sudo apt-get remove --purge libreoffice*
+sudo apt-get clean
+sudo apt-get autoremove
