@@ -23,7 +23,7 @@ def get_daily_count():
     data.sort(key=lambda x: x['date'])
     df = pd.DataFrame.from_records(data)
     df[['confirm', 'dead', 'heal', 'suspect']] = df[['confirm', 'dead', 'heal', 'suspect']].astype(int)
-    df['infect'] = np.diff(df['confirm'].to_numpy(), prepend=0, n=1)
+    df['infect'] = np.diff(df['confirm'].values, prepend=0, n=1)
     df['month'], df['day'] = df['date'].str.split('/').str
     df['date'] = df.apply(lambda x: datetime.strptime('2020-%s-%s' % (x['month'], x['day']), '%Y-%m-%d'), axis=1)
     df.drop(['month', 'day'], axis=1, inplace=True)
