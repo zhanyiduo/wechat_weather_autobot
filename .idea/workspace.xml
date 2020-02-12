@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="557c5ec9-d202-45a6-b1e7-f1308e4d2779" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/getting_convirus_daily.py" beforeDir="false" afterPath="$PROJECT_DIR$/getting_convirus_daily.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_autobot_scheduledreply.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_autobot_scheduledreply.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,7 +12,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/weather_autobot_scheduledreply.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="596">
@@ -28,8 +27,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SIR_prediction.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-975">
+            <state>
               <caret column="18" selection-start-column="18" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/getting_convirus_daily.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="503">
+              <caret line="58" column="4" selection-start-line="58" selection-start-column="4" selection-end-line="58" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -57,8 +68,8 @@
         <option value="$PROJECT_DIR$/weather_autobot_autoreply.py" />
         <option value="$PROJECT_DIR$/SIR_prediction.py" />
         <option value="$PROJECT_DIR$/reinstall_numpy_raspbian.txt" />
-        <option value="$PROJECT_DIR$/getting_convirus_daily.py" />
         <option value="$PROJECT_DIR$/weather_autobot_scheduledreply.py" />
+        <option value="$PROJECT_DIR$/getting_convirus_daily.py" />
       </list>
     </option>
   </component>
@@ -72,6 +83,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -83,7 +95,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -280,29 +291,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SIR_prediction.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-975">
-          <caret column="18" selection-start-column="18" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/getting_convirus_daily.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="25" column="47" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/weather_autobot_scheduledreply.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="596">
           <caret line="83" selection-start-line="83" selection-end-line="83" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SIR_prediction.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="18" selection-start-column="18" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/getting_convirus_daily.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="503">
+          <caret line="58" column="4" selection-start-line="58" selection-start-column="4" selection-end-line="58" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
