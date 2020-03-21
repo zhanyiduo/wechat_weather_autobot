@@ -6,18 +6,7 @@ import numpy as np
 import pandas as pd
 # from SIR_prediction import get_predition
 
-def get_distribution():
-    """get the regional distribution"""
-    province = {}
-    url = 'https://view.inews.qq.com/g2/getOnsInfo?name=wuwei_ww_area_counts&callback=&_=%d' % int(time.time() * 1000)
-    regional_data = json.loads(requests.get(url=url).json()['data'])
-    for item in regional_data:
-        if item['area'] not in province.keys():
-            province.update({item['area']: 0})
-        province[item['area']] += int(item['confirm'])
-    return province,regional_data
-
-def get_daily_count():
+def get_china_daily_count():
     url = 'https://view.inews.qq.com/g2/getOnsInfo?name=wuwei_ww_cn_day_counts&callback=&_=%d' % int(time.time() * 1000)
     data = json.loads(requests.get(url=url).json()['data'])
     data.sort(key=lambda x: x['date'])
@@ -29,35 +18,24 @@ def get_daily_count():
     df.drop(['month', 'day'], axis=1, inplace=True)
     return df,data
 
-def virus_stat_text(region=['武汉','辽宁']):
+def get_us_daily_count():
+    data = {}
+    data['national'] = requests.get(url='https://covidtracking.com/api/us').json()
+    data['state'] = pd.DataFrame(requests.get(url='https://covidtracking.com/api/states').json())
+    return data
 
-    daily_df,daily_list = get_daily_count()
-    today_stat = daily_list[-1]
-    #province_data,city_data = get_distribution()
-    province_data, city_data = [],[]
-    #get national data
-    dt = today_stat['date']
-    confirm = today_stat['confirm']
-    suspect = today_stat['suspect']
-    dead = today_stat['dead']
-    virus_stat_text_list = ['{}日最新2019-nCoV疫情统计：'.format(dt)]
-    virus_stat_text_list.append('全国确诊{0}例，疑似{1}例，死亡{2}例'.format(confirm,suspect,dead))
+def virus_stat_text(state='MO',county ='st.louis'):
+    daily_dict = get_us_daily_count()
+    today_stat = daily_dict.get('national')[-1]
+    confirm = today_stat['positive']
+    death = today_stat['death']
+    virus_stat_text_list = []
+    virus_stat_text_list.append('美国确诊{0}例，死亡{1}例'.format(confirm,death))
 
-    #get city data
-    for item in city_data:
-        if item['city'] in region:
-            city = str(item['city'])
-            confirm = str(item['confirm'])
-            dead = str(item['dead'])
-            virus_stat_text_list.append('{0}确诊{1}例，死亡{2}例'.format(city,confirm,dead))
-    for i in region:
-        if province_data:
-            if i in province_data.keys():
-                confirm = str(province_data[i])
-                virus_stat_text_list.append('{0}确诊{1}例'.format(i,confirm))
-
-   # peaknum,peakdate = get_predition(daily_df)
-   # virus_stat_text_list.append('预测最终感染人数：{0}\n预测{1}感染人数达到峰值'.format(peaknum,peakdate))
+    state_df = daily_dict.get('state')
+    state_confirm = state_df.loc[state_df['state']==state,'positive'].astype(int).values[0]
+    state_death = state_df.loc[state_df['state']==state,'death'].astype(int).values[0]
+    virus_stat_text_list.append('密苏里州确诊{0}例，死亡{1}例'.format(state_confirm, state_death))
     print(virus_stat_text_list)
     return virus_stat_text_list
 

@@ -8,8 +8,8 @@ with open('api_key.txt', 'r') as f:
     ak = f.readlines()
 ak = [x.strip() for x in ak]
 
-def send_nCov(userName, region=['武汉','辽宁']):
-    virus_stat_text_list = virus_stat_text(region=region)
+def send_nCov(userName):
+    virus_stat_text_list = virus_stat_text()
     for virus_text in virus_stat_text_list:
         itchat.send(virus_text, toUserName=userName)
     return None
