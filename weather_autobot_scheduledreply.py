@@ -29,9 +29,10 @@ def weather_main(userName,theCity='St. Louis',zip=63017,ak=None, scheduled_job =
         weather_text_list = weather.get_weather_by_zip(zip)
         weather_text_list = weather_text_list[0:2]
 
+    print(weather_text_list)
     for weather_text in weather_text_list:
         itchat.send(weather_text, toUserName=userName)
-    print('succeed')
+    print('weather send succeed')
 
 def extract_cityname(txt):
     if txt == '天气':
@@ -81,6 +82,6 @@ def my_cron_job():
     send_nCov(userName=get_chatroom('咱们这一家子'))
     print('my cron job')
 sched = BlockingScheduler()
-sched.add_job(my_cron_job, 'cron', id='my_cron_job1', hour=1)
-#sched.add_job(my_cron_job, 'interval', id='my_job_id', seconds=5)
+#sched.add_job(my_cron_job, 'cron', id='my_cron_job1', hour=1)
+sched.add_job(my_cron_job, 'interval', id='my_job_id', seconds=5)
 sched.start()
