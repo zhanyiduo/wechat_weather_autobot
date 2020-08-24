@@ -18,24 +18,32 @@ def get_china_daily_count():
     df.drop(['month', 'day'], axis=1, inplace=True)
     return df,data
 
-def get_us_daily_count():
+def get_us_daily_count(state):
     data = {}
     data['national'] = requests.get(url='https://covidtracking.com/api/us').json()
-    data['state'] = pd.DataFrame(requests.get(url='https://covidtracking.com/api/states').json())
+    data['state'] = requests.get(url='https://api.covidtracking.com/v1/states/{}/current.json'.format(state)).json()
     return data
 
 def virus_stat_text(state='MO',county ='st.louis'):
-    daily_dict = get_us_daily_count()
+    daily_dict = get_us_daily_count(state)
     today_stat = daily_dict.get('national')[-1]
     confirm = today_stat['positive']
     death = today_stat['death']
     virus_stat_text_list = []
     virus_stat_text_list.append('美国确诊{0}例，死亡{1}例'.format(confirm,death))
 
-    state_df = daily_dict.get('state')
-    state_confirm = state_df.loc[state_df['state']==state,'positive'].astype(int).values[0]
-    state_death = state_df.loc[state_df['state']==state,'death'].astype(int).values[0]
-    virus_stat_text_list.append('密苏里州确诊{0}例，死亡{1}例'.format(state_confirm, state_death))
+    state_json = daily_dict.get('state')
+    try:
+        state_confirm=state_json.get('positive')
+        state_death= state_json.get('death')
+        state_hospital=state_json.get('hospitalizedCurrently')
+        state_increase=state_json.get('positiveIncrease')
+        state_deathincrease=state_json.get('deathIncrease')
+        state_hopitalizeincrease = state_json.get('hospitalizedIncrease')
+        virus_stat_text_list.append('密苏里州累计确诊{0}例，死亡{1}例，住院{2}例，今天新增确诊{3}，新增死亡{4}，新增住院{5}'.\
+                                    format(state_confirm, state_death,state_hospital,state_increase,state_deathincrease,state_hopitalizeincrease))
+    except:
+        print('Cannot get state data!')
     print(virus_stat_text_list)
     return virus_stat_text_list
 
